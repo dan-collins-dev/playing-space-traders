@@ -1,3 +1,23 @@
+### General symbols
+@currentShip = BRUMPO-3
+
+### Navigation symbols
+@targetSystem = X1-MC9
+@targetWaypoint = X1-MC9-B7
+
+### Ore and Mineral Symbols
+@quartzSandSymbol = "QUARTZ_SAND"
+@siliconCrystalsSymbol = "SILICON_CRYSTALS"
+@iceWaterSymbol = "ICE_WATER"
+@ironOreSymbol = "IRON_ORE"
+@aluminumOreSymbol = "ALUMINUM_ORE"
+@copperOreSymbol = "COPPER_ORE"
+# X1-MC9-AB5A
+# X1-MC9-F46
+# 
+
+
+
 ### Get agent status
 GET https://api.spacetraders.io/v2/my/agent
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
@@ -6,7 +26,6 @@ Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 ### View Contracts
 GET https://api.spacetraders.io/v2/my/contracts
-Content-Type: application/json
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
@@ -17,28 +36,110 @@ Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
 
+### View current ship
+GET https://api.spacetraders.io/v2/my/ships/{{currentShip}}
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
 ### Negotiate a new contract
-POST https://api.spacetraders.io/v2/my/ships/BRUMPO-3/negotiate/contract
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/negotiate/contract
 Content-Type: application/json
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
 
-### View Ship Cargo
-GET https://api.spacetraders.io/v2/my/ships/BRUMPO-3/cargo
+### Find nearby engineered asteroid
+GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints?type=ENGINEERED_ASTEROID
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
+
+
+### Set ship status to ORBIT
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/orbit
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
+### Move to nearby asteroid
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/navigate
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+Content-Type: application/json
+
+{
+    "waypointSymbol": "X1-MC9-AB5A"
+}
+
+
+
+### Dock ship
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/dock
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
+### Refuel ship
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/refuel
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
+### View Ship Cargo
+GET https://api.spacetraders.io/v2/my/ships/{{currentShip}}/cargo
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
+### Extract ores and minerals
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/extract
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+
+
+
+### YEET CARGO
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/jettison
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+Content-Type: application/json
+
+{
+    "symbol": {{iceWaterSymbol}},
+    "units": 99
+}
+
+
+
+### Sell cargo
+POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/sell
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+Content-Type: application/json
+
+{
+    "symbol": {{ironOreSymbol}},
+    "units": 3
+}
+
+
+
+### Find a marketplace in the current system
+GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints?traits=MARKETPLACE
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
 ### View market for current pos
-GET https://api.spacetraders.io/v2/systems/X1-MC9/waypoints/X1-MC9-A1/market
+GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints/X1-MC9-A2/market
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
 
-### Find nearby engineered asteroid
-GET https://api.spacetraders.io/v2/systems/X1-MC9/waypoints?type=ENGINEERED_ASTEROID
+
+
+### Deliver contract items
+POST https://api.spacetraders.io/v2/my/contracts/cmthawmx8vlonwa6wpmtpokkb/deliver
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
+Content-Type: application/json
 
-
-
+{
+    "shipSymbol": "BRUMPO-3",
+    "tradeSymbol": "ALUMINUM_ORE",
+    "units": 4
+}
