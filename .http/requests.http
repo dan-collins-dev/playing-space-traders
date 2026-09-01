@@ -61,13 +61,13 @@ Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
 
-### Move to nearby asteroid
+### Move to specified waypoint
 POST https://api.spacetraders.io/v2/my/ships/{{currentShip}}/navigate
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 Content-Type: application/json
 
 {
-    "waypointSymbol": "X1-MC9-AB5A"
+    "waypointSymbol": "X1-MC9-H53"
 }
 
 
@@ -102,7 +102,7 @@ Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 Content-Type: application/json
 
 {
-    "symbol": {{iceWaterSymbol}},
+    "symbol": {{quartzSandSymbol}},
     "units": 99
 }
 
@@ -115,7 +115,7 @@ Content-Type: application/json
 
 {
     "symbol": {{ironOreSymbol}},
-    "units": 3
+    "units": 4
 }
 
 
@@ -125,11 +125,10 @@ GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints?traits=MAR
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
 
 
+
 ### View market for current pos
 GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints/X1-MC9-A2/market
 Authorization: Bearer {{$dotenv BEARER_TOKEN}}
-
-
 
 
 
@@ -143,3 +142,9 @@ Content-Type: application/json
     "tradeSymbol": "ALUMINUM_ORE",
     "units": 4
 }
+
+
+
+### List waypoitns in system (note the pagination of results)
+GET https://api.spacetraders.io/v2/systems/{{targetSystem}}/waypoints
+Authorization: Bearer {{$dotenv BEARER_TOKEN}}
